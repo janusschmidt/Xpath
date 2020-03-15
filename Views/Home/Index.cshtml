@@ -1,0 +1,60 @@
+﻿@model Xpath.Models.HomeViewModel
+@{
+    ViewData["Title"] = "Xpath";
+}
+<form action="" method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="xml">Xpath</label>
+                    <input id="xpath" class="form-control" asp-for="xpath" placeholder="eg. p:a" />
+                </div>
+                <div class="form-group">
+                    <button id="execute" class="btn btn-primary" >update</button>
+                </div>
+            </div>
+            <div class="col">
+                <table id="namespaces" class="table table-striped">
+                    <thead class="thead-dark"><tr><th scope="col">Namespaces</th></tr></thead>
+                    <tbody>
+                        @if (Model?.namespaces!=null)
+                            foreach (var kv in Model?.namespaces)
+                            {
+                                <tr><td>[@kv.Key,@kv.Value]</td></tr>
+                            }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <table id="results" class="table table-striped">
+                    <thead class="thead-dark"><tr><th scope="col">Results</th></tr></thead>
+                    <tbody>
+                        @foreach (var item in Model?.result ?? new System.Xml.XPath.XPathNavigator[0])
+                        {
+                            <tr><td>@item.OuterXml</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="debug" class="row">
+            <div class="col">
+                @Model?.debug
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                    <div class="form-group">
+                        <label for="xml">Input xml</label>
+                        <textarea id="xml" class="form-control" rows="20" asp-for="xml"></textarea>
+                    </div>
+            </div>
+        </div>
+    </div>
+</form>
